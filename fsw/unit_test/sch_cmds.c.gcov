@@ -125,7 +125,7 @@
         -:  123:                ** SCH ground commands with unknown command codes...
         -:  124:                */
         -:  125:                default:
-        1:  126:                    CFE_EVS_SendEvent(SCH_CC_ERR_EID, CFE_EVS_ERROR,
+        1:  126:                    CFE_EVS_SendEvent(SCH_CC_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  127:                                      "Invalid command code: ID = 0x%04X, CC = %d",
         -:  128:                                      MessageID, CommandCode);
         -:  129:
@@ -138,7 +138,7 @@
         -:  136:        ** Unknown message ID's
         -:  137:        */
         -:  138:        default:
-        1:  139:            CFE_EVS_SendEvent(SCH_MD_ERR_EID, CFE_EVS_ERROR,
+        1:  139:            CFE_EVS_SendEvent(SCH_MD_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  140:                              "Msg with Invalid message ID Rcvd -- ID = 0x%04X",
         -:  141:                              MessageID);
         -:  142:            break;
@@ -191,8 +191,8 @@
         -:  189:        /*
         -:  190:        ** Timestamps and send housekeeping packet
         -:  191:        */
-        4:  192:        CFE_SB_TimeStampMsg((CFE_SB_Msg_t *) &SCH_AppData.HkPacket);
-        4:  193:        CFE_SB_SendMsg((CFE_SB_Msg_t *) &SCH_AppData.HkPacket);
+        4:  192:        CFE_SB_TimeStampMsg((CFE_MSG_Message_t *) &SCH_AppData.HkPacket);
+        4:  193:        CFE_SB_SendMsg((CFE_MSG_Message_t *) &SCH_AppData.HkPacket);
         -:  194:
         -:  195:        /*
         -:  196:        ** Reset "high rate" event filters
@@ -241,7 +241,7 @@
         -:  239:        */
         3:  240:        SCH_AppData.CmdCounter++;
         -:  241:
-        3:  242:        CFE_EVS_SendEvent(SCH_NOOP_CMD_EID, CFE_EVS_INFORMATION,
+        3:  242:        CFE_EVS_SendEvent(SCH_NOOP_CMD_EID, CFE_EVS_INFORMATION_BIT,
         -:  243:                          "NO-op command. Version %d.%d.%d.%d",
         -:  244:                          SCH_MAJOR_VERSION,
         -:  245:                          SCH_MINOR_VERSION,
@@ -291,7 +291,7 @@
         1:  289:        SCH_AppData.MissedMajorFrameCount     = 0;
         1:  290:        SCH_AppData.UnexpectedMajorFrameCount = 0;
         -:  291:
-        1:  292:        CFE_EVS_SendEvent(SCH_RESET_CMD_EID, CFE_EVS_DEBUG,
+        1:  292:        CFE_EVS_SendEvent(SCH_RESET_CMD_EID, CFE_EVS_DEBUG_BIT,
         -:  293:                          "RESET command");
         -:  294:    }
         -:  295:
@@ -309,7 +309,7 @@
         -:  307:
         6:  308:void SCH_EnableCmd(CFE_SB_MsgPtr_t MessagePtr)
         -:  309:{
-        6:  310:    boolean         GoodCommand = FALSE;
+        6:  310:    bool         GoodCommand = false;
         6:  311:    SCH_EntryCmd_t *EnableCmd = NULL;
         6:  312:    uint16          SlotNumber = 0; 
         6:  313:    uint16          EntryNumber = 0;
@@ -331,7 +331,7 @@
         -:  329:            /*
         -:  330:            ** Invalid command packet argument
         -:  331:            */
-        3:  332:            CFE_EVS_SendEvent(SCH_ENABLE_CMD_ARG_ERR_EID, CFE_EVS_ERROR,
+        3:  332:            CFE_EVS_SendEvent(SCH_ENABLE_CMD_ARG_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  333:                              "ENABLE cmd: invalid argument, slot=%d (<%d), entry=%d (<%d)",
         -:  334:                              SlotNumber, SCH_TOTAL_SLOTS, 
         -:  335:                              EntryNumber, SCH_ENTRIES_PER_SLOT);
@@ -342,7 +342,7 @@
         -:  340:            /*
         -:  341:            ** Invalid schedule table enable state (unused or corrupt)
         -:  342:            */
-        2:  343:            CFE_EVS_SendEvent(SCH_ENABLE_CMD_ENTRY_ERR_EID, CFE_EVS_ERROR,
+        2:  343:            CFE_EVS_SendEvent(SCH_ENABLE_CMD_ENTRY_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  344:                              "ENABLE command: invalid state = %d, slot = %d, entry = %d",
         1:  345:                              SCH_AppData.ScheduleTable[TableIndex].EnableState,
         -:  346:                              SlotNumber, EntryNumber);
@@ -352,12 +352,12 @@
         -:  350:            /*
         -:  351:            ** Success
         -:  352:            */
-        1:  353:            GoodCommand = TRUE;
+        1:  353:            GoodCommand = true;
         -:  354:    
         1:  355:            SCH_AppData.ScheduleTable[TableIndex].EnableState = SCH_ENABLED;
         1:  356:            CFE_TBL_Modified(SCH_AppData.ScheduleTableHandle);
         -:  357:    
-        1:  358:            CFE_EVS_SendEvent(SCH_ENABLE_CMD_EID, CFE_EVS_DEBUG,
+        1:  358:            CFE_EVS_SendEvent(SCH_ENABLE_CMD_EID, CFE_EVS_DEBUG_BIT,
         -:  359:                              "ENABLE command: slot = %d, entry = %d",
         -:  360:                              SlotNumber, EntryNumber );
         -:  361:        }
@@ -379,7 +379,7 @@
         -:  377:
         6:  378:void SCH_DisableCmd(CFE_SB_MsgPtr_t MessagePtr)
         -:  379:{
-        6:  380:    boolean         GoodCommand = FALSE;
+        6:  380:    bool         GoodCommand = false;
         6:  381:    SCH_EntryCmd_t *DisableCmd  = NULL;
         6:  382:    uint16          SlotNumber  = 0;
         6:  383:    uint16          EntryNumber = 0;
@@ -401,7 +401,7 @@
         -:  399:            /*
         -:  400:            ** Invalid command packet argument
         -:  401:            */
-        3:  402:            CFE_EVS_SendEvent(SCH_DISABLE_CMD_ARG_ERR_EID, CFE_EVS_ERROR,
+        3:  402:            CFE_EVS_SendEvent(SCH_DISABLE_CMD_ARG_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  403:                              "DISABLE cmd: invalid argument, slot=%d (<%d), entry=%d (<%d)",
         -:  404:                              SlotNumber, SCH_TOTAL_SLOTS, 
         -:  405:                              EntryNumber, SCH_ENTRIES_PER_SLOT);
@@ -412,7 +412,7 @@
         -:  410:            /*
         -:  411:            ** Invalid schedule table enable state (unused or corrupt)
         -:  412:            */
-        2:  413:            CFE_EVS_SendEvent(SCH_DISABLE_CMD_ENTRY_ERR_EID, CFE_EVS_ERROR,
+        2:  413:            CFE_EVS_SendEvent(SCH_DISABLE_CMD_ENTRY_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  414:                              "DISABLE command: invalid state = %d, slot = %d, entry = %d",
         1:  415:                              SCH_AppData.ScheduleTable[TableIndex].EnableState,
         -:  416:                              SlotNumber, EntryNumber);
@@ -422,12 +422,12 @@
         -:  420:            /*
         -:  421:            ** Success
         -:  422:            */
-        1:  423:            GoodCommand = TRUE;
+        1:  423:            GoodCommand = true;
         -:  424:    
         1:  425:            SCH_AppData.ScheduleTable[TableIndex].EnableState = SCH_DISABLED;
         1:  426:            CFE_TBL_Modified(SCH_AppData.ScheduleTableHandle);
         -:  427:    
-        1:  428:            CFE_EVS_SendEvent(SCH_DISABLE_CMD_EID, CFE_EVS_DEBUG,
+        1:  428:            CFE_EVS_SendEvent(SCH_DISABLE_CMD_EID, CFE_EVS_DEBUG_BIT,
         -:  429:                              "DISABLE command: slot = %d, entry = %d",
         -:  430:                              SlotNumber, EntryNumber);
         -:  431:        }
@@ -449,7 +449,7 @@
         -:  447:
         6:  448:void SCH_EnableGroupCmd(CFE_SB_MsgPtr_t MessagePtr)
         -:  449:{
-        6:  450:    boolean              GoodCommand = FALSE;
+        6:  450:    bool              GoodCommand = false;
         6:  451:    uint32               TblGroupNumber = 0;
         6:  452:    uint32               TblMultiGroup = 0;
         6:  453:    int32                LoopCount = 0;
@@ -475,7 +475,7 @@
         -:  473:            /*
         -:  474:            ** No groups selected
         -:  475:            */
-        2:  476:            CFE_EVS_SendEvent(SCH_ENA_GRP_CMD_ERR_EID, CFE_EVS_ERROR,
+        2:  476:            CFE_EVS_SendEvent(SCH_ENA_GRP_CMD_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  477:                              "ENABLE GROUP command: invalid argument, no groups selected");
         -:  478:        }
         -:  479:        else
@@ -510,14 +510,14 @@
         3:  508:            if (MatchCount > 0)
         -:  509:            {
         2:  510:                CFE_TBL_Modified(SCH_AppData.ScheduleTableHandle);
-        2:  511:                CFE_EVS_SendEvent(SCH_ENA_GRP_CMD_EID, CFE_EVS_DEBUG,
+        2:  511:                CFE_EVS_SendEvent(SCH_ENA_GRP_CMD_EID, CFE_EVS_DEBUG_BIT,
         -:  512:                                  "ENABLE GROUP command: match count = %d",
         -:  513:                                  (int)MatchCount);
-        2:  514:                GoodCommand = TRUE;
+        2:  514:                GoodCommand = true;
         -:  515:            }
         -:  516:            else
         -:  517:            {
-        1:  518:                CFE_EVS_SendEvent(SCH_ENA_GRP_NOT_FOUND_ERR_EID, CFE_EVS_ERROR,
+        1:  518:                CFE_EVS_SendEvent(SCH_ENA_GRP_NOT_FOUND_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  519:                                  "ENABLE GROUP command: Neither Group %d nor Multi-Group 0x%06X found",
         1:  520:                                  (int)(CmdGroupNumber>>24), (unsigned int)CmdMultiGroup);
         -:  521:            }
@@ -540,7 +540,7 @@
         -:  538:
         6:  539:void SCH_DisableGroupCmd(CFE_SB_MsgPtr_t MessagePtr)
         -:  540:{
-        6:  541:    boolean              GoodCommand = FALSE;
+        6:  541:    bool              GoodCommand = false;
         6:  542:    uint32               TblGroupNumber = 0;
         6:  543:    uint32               TblMultiGroup = 0;
         6:  544:    int32                LoopCount = 0;
@@ -566,7 +566,7 @@
         -:  564:            /*
         -:  565:            ** No groups selected
         -:  566:            */
-        2:  567:            CFE_EVS_SendEvent(SCH_DIS_GRP_CMD_ERR_EID, CFE_EVS_ERROR,
+        2:  567:            CFE_EVS_SendEvent(SCH_DIS_GRP_CMD_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  568:                              "DISABLE GROUP command: invalid argument, no groups selected");
         -:  569:        }
         -:  570:        else
@@ -601,14 +601,14 @@
         3:  599:            if (MatchCount > 0)
         -:  600:            {
         2:  601:                CFE_TBL_Modified(SCH_AppData.ScheduleTableHandle);
-        2:  602:                CFE_EVS_SendEvent(SCH_DIS_GRP_CMD_EID, CFE_EVS_DEBUG,
+        2:  602:                CFE_EVS_SendEvent(SCH_DIS_GRP_CMD_EID, CFE_EVS_DEBUG_BIT,
         -:  603:                                  "DISABLE GROUP command: match count = %d",
         -:  604:                                  (int)MatchCount);
-        2:  605:                GoodCommand = TRUE;
+        2:  605:                GoodCommand = true;
         -:  606:            }
         -:  607:            else
         -:  608:            {
-        1:  609:                CFE_EVS_SendEvent(SCH_DIS_GRP_NOT_FOUND_ERR_EID, CFE_EVS_ERROR,
+        1:  609:                CFE_EVS_SendEvent(SCH_DIS_GRP_NOT_FOUND_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  610:                                  "DISABLE GROUP command: Neither Group %d nor Multi-Group 0x%06X found",
         1:  611:                                  (int)(CmdGroupNumber>>24), (unsigned int)CmdMultiGroup);
         -:  612:            }
@@ -631,17 +631,17 @@
         -:  629:
         3:  630:void SCH_EnableSyncCmd(CFE_SB_MsgPtr_t MessagePtr)
         -:  631:{
-        3:  632:    boolean   GoodCommand = FALSE;
+        3:  632:    bool   GoodCommand = false;
         -:  633:
         3:  634:    if(SCH_VerifyCmdLength(MessagePtr, sizeof(SCH_NoArgsCmd_t)) == SCH_SUCCESS)
         -:  635:    {
-        2:  636:        GoodCommand = TRUE;
+        2:  636:        GoodCommand = true;
         -:  637:        
-        2:  638:        SCH_AppData.IgnoreMajorFrame = FALSE;
-        2:  639:        SCH_AppData.UnexpectedMajorFrame = FALSE;
+        2:  638:        SCH_AppData.IgnoreMajorFrame = false;
+        2:  639:        SCH_AppData.UnexpectedMajorFrame = false;
         2:  640:        SCH_AppData.ConsecutiveNoisyFrameCounter = 0;
         -:  641:        
-        2:  642:        CFE_EVS_SendEvent(SCH_ENA_SYNC_CMD_EID, CFE_EVS_DEBUG,
+        2:  642:        CFE_EVS_SendEvent(SCH_ENA_SYNC_CMD_EID, CFE_EVS_DEBUG_BIT,
         -:  643:                          "Major Frame Synchronization Enabled");
         -:  644:    }
         -:  645:
@@ -663,7 +663,7 @@
         -:  661:
         5:  662:void SCH_SendDiagTlmCmd(CFE_SB_MsgPtr_t MessagePtr)
         -:  663:{
-        5:  664:    boolean              GoodCommand = FALSE;
+        5:  664:    bool              GoodCommand = false;
         5:  665:    uint32               TblIndex = 0;
         5:  666:    uint32               WordIndex = 0;
         5:  667:    uint32               BitIndex = 0;
@@ -671,7 +671,7 @@
         -:  669:
         5:  670:    if(SCH_VerifyCmdLength(MessagePtr, sizeof(SCH_NoArgsCmd_t)) == SCH_SUCCESS)
         -:  671:    {
-        3:  672:        GoodCommand = TRUE;
+        3:  672:        GoodCommand = true;
         -:  673:        
         -:  674:        /* Zero out the previous entry states */
         3:  675:        CFE_PSP_MemSet(&SCH_AppData.DiagPacket.EntryStates[0], 0x0, SCH_NUM_STATUS_BYTES_REQD);
@@ -702,10 +702,10 @@
         -:  700:        /*
         -:  701:        ** Timestamp and send diagnostic packet
         -:  702:        */
-        3:  703:        CFE_SB_TimeStampMsg((CFE_SB_Msg_t *) &SCH_AppData.DiagPacket);
-        3:  704:        CFE_SB_SendMsg((CFE_SB_Msg_t *) &SCH_AppData.DiagPacket);
+        3:  703:        CFE_SB_TimeStampMsg((CFE_MSG_Message_t *) &SCH_AppData.DiagPacket);
+        3:  704:        CFE_SB_SendMsg((CFE_MSG_Message_t *) &SCH_AppData.DiagPacket);
         -:  705:
-        3:  706:        CFE_EVS_SendEvent(SCH_SEND_DIAG_CMD_EID, CFE_EVS_DEBUG,
+        3:  706:        CFE_EVS_SendEvent(SCH_SEND_DIAG_CMD_EID, CFE_EVS_DEBUG_BIT,
         -:  707:                          "Transmitting Diagnostic Message");
         -:  708:    }
         -:  709:
@@ -786,7 +786,7 @@
        10:  784:        MessageID   = CFE_SB_GetMsgId(MessagePtr);
        10:  785:        CommandCode = CFE_SB_GetCmdCode(MessagePtr);   
         -:  786:         
-       10:  787:        CFE_EVS_SendEvent(SCH_CMD_LEN_ERR_EID, CFE_EVS_ERROR,
+       10:  787:        CFE_EVS_SendEvent(SCH_CMD_LEN_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  788:                          "Cmd Msg with Bad length Rcvd: ID = 0x%04X, CC = %d, Exp Len = %d, Len = %d",
         -:  789:                          MessageID, CommandCode, (int)ExpectedLength, ActualLength);
         -:  790:
@@ -805,7 +805,7 @@
         -:  803:** NOTE: For complete prolog information, see above
         -:  804:********************************************************************/
         -:  805:
-       34:  806:void SCH_PostCommandResult(boolean GoodCommand)
+       34:  806:void SCH_PostCommandResult(bool GoodCommand)
         -:  807:{
        34:  808:    if (GoodCommand)
         -:  809:    {

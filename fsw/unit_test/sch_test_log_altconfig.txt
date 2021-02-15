@@ -26,11 +26,11 @@ PASS: SCH_LibData.ProcessingDisabledCtr == 1
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 0
 
 Running Test: SCH_GetProcessingState_Test_True
-PASS: Result == TRUE
+PASS: Result == true
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 0
 
 Running Test: SCH_GetProcessingState_Test_False
-PASS: Result == FALSE
+PASS: Result == false
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 0
 
 Running Test: SCH_AppMain_Test_RegisterAppError
@@ -73,13 +73,13 @@ INFO EVENT ID=1 SCH Initialized. Version 2.2.1.0
 ERROR EVENT ID=21 Major Frame Sync too noisy (Slot 1). Disabling synchronization.
 INFO EVENT ID=18 Multiple slots processed: slot = 0, count = 2
 PASS: Major Frame Sync too noisy (Slot 1). Disabling synchronization.
-PASS: SCH_AppData.IgnoreMajorFrameMsgSent == TRUE
+PASS: SCH_AppData.IgnoreMajorFrameMsgSent == true
 PASS: SCH_AppData.AppID == 99
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 3
 
 Running Test: SCH_AppMain_Test_NominalIgnoreMajorFrameFalse
 INFO EVENT ID=1 SCH Initialized. Version 2.2.1.0
-PASS: SCH_AppData.IgnoreMajorFrameMsgSent == FALSE
+PASS: SCH_AppData.IgnoreMajorFrameMsgSent == false
 PASS: SCH_AppData.AppID == 99
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 1
 
@@ -316,9 +316,9 @@ PASS: Ut_CFE_EVS_GetEventQueueDepth() == 0
 
 Running Test: SCH_TimerInit_Test_CustomEarlyInitError
 ERROR EVENT ID=12 Error creating Timer (RC=0xFFFFFFFF)
-PASS: SCH_AppData.IgnoreMajorFrame     == FALSE
-PASS: SCH_AppData.IgnoreMajorFrameMsgSent == FALSE
-PASS: SCH_AppData.UnexpectedMajorFrame == FALSE
+PASS: SCH_AppData.IgnoreMajorFrame     == false
+PASS: SCH_AppData.IgnoreMajorFrameMsgSent == false
+PASS: SCH_AppData.UnexpectedMajorFrame == false
 PASS: SCH_AppData.SyncToMET            == SCH_NOT_SYNCHRONIZED
 PASS: SCH_AppData.MajorFrameSource     == SCH_MAJOR_FS_NONE
 PASS: SCH_AppData.NextSlotNumber       == 0
@@ -336,9 +336,9 @@ PASS: Ut_CFE_EVS_GetEventQueueDepth() == 1
 
 Running Test: SCH_TimerInit_Test_TimerAccuracyWarning
 INFO EVENT ID=13 OS Timer Accuracy (102 > reqd 101 usec) requires Minor Frame MET sync
-PASS: SCH_AppData.IgnoreMajorFrame     == FALSE
-PASS: SCH_AppData.IgnoreMajorFrameMsgSent == FALSE
-PASS: SCH_AppData.UnexpectedMajorFrame == FALSE
+PASS: SCH_AppData.IgnoreMajorFrame     == false
+PASS: SCH_AppData.IgnoreMajorFrameMsgSent == false
+PASS: SCH_AppData.UnexpectedMajorFrame == false
 PASS: SCH_AppData.MajorFrameSource     == SCH_MAJOR_FS_NONE
 PASS: SCH_AppData.NextSlotNumber       == 0
 PASS: SCH_AppData.MinorFramesSinceTone == SCH_TIME_SYNC_SLOT
@@ -356,9 +356,9 @@ PASS: Ut_CFE_EVS_GetEventQueueDepth() == 1
 
 Running Test: SCH_TimerInit_Test_BinSemCreateError
 ERROR EVENT ID=15 Error creating Main Loop Timing Semaphore (RC=0xFFFFFFFF)
-PASS: SCH_AppData.IgnoreMajorFrame     == FALSE
-PASS: SCH_AppData.IgnoreMajorFrameMsgSent == FALSE
-PASS: SCH_AppData.UnexpectedMajorFrame == FALSE
+PASS: SCH_AppData.IgnoreMajorFrame     == false
+PASS: SCH_AppData.IgnoreMajorFrameMsgSent == false
+PASS: SCH_AppData.UnexpectedMajorFrame == false
 PASS: SCH_AppData.SyncToMET            == SCH_NOT_SYNCHRONIZED
 PASS: SCH_AppData.MajorFrameSource     == SCH_MAJOR_FS_NONE
 PASS: SCH_AppData.NextSlotNumber       == 0
@@ -375,9 +375,9 @@ PASS: Result == -1
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 1
 
 Running Test: SCH_TimerInit_Test_Nominal
-PASS: SCH_AppData.IgnoreMajorFrame     == FALSE
-PASS: SCH_AppData.IgnoreMajorFrameMsgSent == FALSE
-PASS: SCH_AppData.UnexpectedMajorFrame == FALSE
+PASS: SCH_AppData.IgnoreMajorFrame     == false
+PASS: SCH_AppData.IgnoreMajorFrameMsgSent == false
+PASS: SCH_AppData.UnexpectedMajorFrame == false
 PASS: SCH_AppData.SyncToMET            == SCH_NOT_SYNCHRONIZED
 PASS: SCH_AppData.MajorFrameSource     == SCH_MAJOR_FS_NONE
 PASS: SCH_AppData.NextSlotNumber       == 0
@@ -918,8 +918,8 @@ PASS: Ut_CFE_EVS_GetEventQueueDepth() == 1
 
 Running Test: SCH_EnableSyncCmd_Test_Nominal
 DEBUG EVENT ID=46 Major Frame Synchronization Enabled
-PASS: SCH_AppData.IgnoreMajorFrame == FALSE
-PASS: SCH_AppData.UnexpectedMajorFrame == FALSE
+PASS: SCH_AppData.IgnoreMajorFrame == false
+PASS: SCH_AppData.UnexpectedMajorFrame == false
 PASS: SCH_AppData.ConsecutiveNoisyFrameCounter == 0
 PASS: Major Frame Synchronization Enabled
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 1
@@ -1019,23 +1019,23 @@ PASS: Result == 1
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 0
 
 Running Test: SCH_MajorFrameCallback_Test_NoisyNotSynchronized
-PASS: SCH_AppData.UnexpectedMajorFrame == TRUE
+PASS: SCH_AppData.UnexpectedMajorFrame == true
 PASS: SCH_AppData.UnexpectedMajorFrameCount == 1
 PASS: SCH_AppData.ConsecutiveNoisyFrameCounter == SCH_MAX_NOISY_MAJORF
-PASS: SCH_AppData.IgnoreMajorFrame == TRUE
+PASS: SCH_AppData.IgnoreMajorFrame == true
 PASS: SCH_AppData.LastSyncMETSlot == 1
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 0
 
 Running Test: SCH_MajorFrameCallback_Test_NoisySynchronized
-PASS: SCH_AppData.UnexpectedMajorFrame == TRUE
+PASS: SCH_AppData.UnexpectedMajorFrame == true
 PASS: SCH_AppData.UnexpectedMajorFrameCount == 1
 PASS: SCH_AppData.ConsecutiveNoisyFrameCounter == SCH_MAX_NOISY_MAJORF
-PASS: SCH_AppData.IgnoreMajorFrame == TRUE
+PASS: SCH_AppData.IgnoreMajorFrame == true
 PASS: SCH_AppData.LastSyncMETSlot == 1
 PASS: Ut_CFE_EVS_GetEventQueueDepth() == 0
 
 Running Test: SCH_MajorFrameCallback_Test_FrameOccurredWhenExpected
-PASS: SCH_AppData.UnexpectedMajorFrame == FALSE
+PASS: SCH_AppData.UnexpectedMajorFrame == false
 PASS: SCH_AppData.ConsecutiveNoisyFrameCounter == 0
 PASS: SCH_AppData.ValidMajorFrameCount == 1
 PASS: SCH_AppData.MinorFramesSinceTone == 0

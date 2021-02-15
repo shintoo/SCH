@@ -149,7 +149,7 @@
         5:  147:        Status = SCH_CustomLateInit();
         5:  148:        if (Status != CFE_SUCCESS)
         -:  149:        {
-        1:  150:            CFE_EVS_SendEvent(SCH_MAJOR_FRAME_SUB_ERR_EID, CFE_EVS_ERROR,
+        1:  150:            CFE_EVS_SendEvent(SCH_MAJOR_FRAME_SUB_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  151:                              "Error initializing Timers (RC=0x%08X)", 
         -:  152:                              (unsigned int)Status);    
         -:  153:        }
@@ -163,7 +163,7 @@
         -:  161:        /*
         -:  162:        ** Set request to terminate main loop
         -:  163:        */
-        3:  164:        RunStatus = CFE_ES_APP_ERROR;
+        3:  164:        RunStatus = CFE_ES_RunStatus_APP_ERROR;
         -:  165:    }
         -:  166:
         -:  167:    /*
@@ -189,19 +189,19 @@
         -:  187:        /*
         -:  188:        ** Report if during the previous frame the major has determined to be unstable
         -:  189:        */
-        4:  190:        if (SCH_AppData.IgnoreMajorFrame == TRUE)
+        4:  190:        if (SCH_AppData.IgnoreMajorFrame == true)
         -:  191:        {
-        1:  192:            if (SCH_AppData.IgnoreMajorFrameMsgSent == FALSE)
+        1:  192:            if (SCH_AppData.IgnoreMajorFrameMsgSent == false)
         -:  193:            {
-        1:  194:                CFE_EVS_SendEvent(SCH_NOISY_MAJOR_FRAME_ERR_EID, CFE_EVS_ERROR, 
+        1:  194:                CFE_EVS_SendEvent(SCH_NOISY_MAJOR_FRAME_ERR_EID, CFE_EVS_ERROR_BIT, 
         -:  195:                                  "Major Frame Sync too noisy (Slot %d). Disabling synchronization.", 
         1:  196:                                  SCH_AppData.MinorFramesSinceTone);
-        1:  197:                SCH_AppData.IgnoreMajorFrameMsgSent = TRUE;
+        1:  197:                SCH_AppData.IgnoreMajorFrameMsgSent = true;
         -:  198:            }
         -:  199:        }
         -:  200:        else
         -:  201:        {
-        3:  202:            SCH_AppData.IgnoreMajorFrameMsgSent = FALSE;
+        3:  202:            SCH_AppData.IgnoreMajorFrameMsgSent = false;
         -:  203:        }
         -:  204:
         -:  205:        /*
@@ -209,7 +209,7 @@
         -:  207:        */
         -:  208:#if SCH_LIB_PRESENCE == 1
         8:  209:        if ((Status == OS_SUCCESS) &&
-        4:  210:            (SCH_GetProcessingState() == TRUE))
+        4:  210:            (SCH_GetProcessingState() == true))
         -:  211:        {
         2:  212:            Status = SCH_ProcessScheduleTable();
         -:  213:        }
@@ -230,7 +230,7 @@
         -:  228:            /*
         -:  229:            ** Set request to terminate main loop
         -:  230:            */
-        1:  231:            RunStatus = CFE_ES_APP_ERROR;
+        1:  231:            RunStatus = CFE_ES_RunStatus_APP_ERROR;
         -:  232:        }
         -:  233:
         -:  234:    } /* End of while */
@@ -243,7 +243,7 @@
         -:  241:        /*
         -:  242:        ** Send an event describing the reason for the termination
         -:  243:        */
-        4:  244:        CFE_EVS_SendEvent(SCH_APP_EXIT_EID, CFE_EVS_CRITICAL, 
+        4:  244:        CFE_EVS_SendEvent(SCH_APP_EXIT_EID, CFE_EVS_CRITICAL_BIT, 
         -:  245:                          "SCH App: terminating, err = 0x%08X", (unsigned int)Status);
         -:  246:
         -:  247:        /*
@@ -344,7 +344,7 @@
         -:  342:    ** Application startup event message
         -:  343:    */
         6:  344:    Status = CFE_EVS_SendEvent(SCH_INITSTATS_INF_EID,
-        -:  345:                               CFE_EVS_INFORMATION,
+        -:  345:                               CFE_EVS_INFORMATION_BIT,
         -:  346:                               "SCH Initialized. Version %d.%d.%d.%d",
         -:  347:                               SCH_MAJOR_VERSION,
         -:  348:                               SCH_MINOR_VERSION,
@@ -385,7 +385,7 @@
         -:  383:    /*
         -:  384:    ** Register for event services
         -:  385:    */
-       12:  386:    Status = CFE_EVS_Register(SCH_AppData.EventFilters, SCH_FILTER_COUNT, CFE_EVS_BINARY_FILTER);
+       12:  386:    Status = CFE_EVS_Register(SCH_AppData.EventFilters, SCH_FILTER_COUNT, CFE_EVS_EVERY_OTHER_ONE);
        12:  387:    if (Status != CFE_SUCCESS)
         -:  388:    {
         2:  389:        CFE_ES_WriteToSysLog("SCH App: Error Registering For Event Services, RC=0x%08X\n", (unsigned int)Status);
@@ -413,12 +413,12 @@
         -:  411:    /*
         -:  412:    ** Initialize housekeeping packet (clear user data area)
         -:  413:    */
-       13:  414:    CFE_SB_InitMsg(&SCH_AppData.HkPacket, SCH_HK_TLM_MID, sizeof(SCH_HkPacket_t), TRUE);
+       13:  414:    CFE_SB_InitMsg(&SCH_AppData.HkPacket, SCH_HK_TLM_MID, sizeof(SCH_HkPacket_t), true);
         -:  415:    
         -:  416:    /*
         -:  417:    ** Initialize diagnostic packet (clear user data area)
         -:  418:    */
-       13:  419:    CFE_SB_InitMsg(&SCH_AppData.DiagPacket, SCH_DIAG_TLM_MID, sizeof(SCH_DiagPacket_t), TRUE);
+       13:  419:    CFE_SB_InitMsg(&SCH_AppData.DiagPacket, SCH_DIAG_TLM_MID, sizeof(SCH_DiagPacket_t), true);
         -:  420:
         -:  421:    /*
         -:  422:    ** Create Software Bus message pipe
@@ -426,7 +426,7 @@
        13:  424:    Status = CFE_SB_CreatePipe(&SCH_AppData.CmdPipe, SCH_PIPE_DEPTH, SCH_PIPE_NAME);
        13:  425:    if (Status != CFE_SUCCESS)
         -:  426:    {
-        2:  427:        CFE_EVS_SendEvent(SCH_CR_PIPE_ERR_EID, CFE_EVS_ERROR,
+        2:  427:        CFE_EVS_SendEvent(SCH_CR_PIPE_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  428:                          "Error Creating SB Pipe, RC=0x%08X", (unsigned int)Status);
         2:  429:        return(Status);
         -:  430:    }
@@ -437,7 +437,7 @@
        11:  435:    Status = CFE_SB_Subscribe(SCH_SEND_HK_MID, SCH_AppData.CmdPipe);
        11:  436:    if (Status != CFE_SUCCESS)
         -:  437:    {
-        1:  438:        CFE_EVS_SendEvent(SCH_SUB_HK_REQ_ERR_EID, CFE_EVS_ERROR,
+        1:  438:        CFE_EVS_SendEvent(SCH_SUB_HK_REQ_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  439:                          "Error Subscribing to HK Request(MID=0x%04X), RC=0x%08X", 
         -:  440:                          SCH_SEND_HK_MID, (unsigned int)Status);    
         1:  441:        return(Status);
@@ -449,7 +449,7 @@
        10:  447:    Status = CFE_SB_Subscribe(SCH_CMD_MID, SCH_AppData.CmdPipe);
        10:  448:    if (Status != CFE_SUCCESS)
         -:  449:    {
-        1:  450:        CFE_EVS_SendEvent(SCH_SUB_GND_CMD_ERR_EID, CFE_EVS_ERROR,
+        1:  450:        CFE_EVS_SendEvent(SCH_SUB_GND_CMD_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  451:                          "Error Subscribing to GND CMD(MID=0x%04X), RC=0x%08X", 
         -:  452:                          SCH_CMD_MID, (unsigned int)Status);    
         1:  453:        return(Status);
@@ -499,7 +499,7 @@
         -:  497:
        14:  498:    if (Status != CFE_SUCCESS)
         -:  499:    {
-        2:  500:        CFE_EVS_SendEvent(SCH_SDT_REG_ERR_EID, CFE_EVS_ERROR,
+        2:  500:        CFE_EVS_SendEvent(SCH_SDT_REG_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  501:                          "Error Registering SDT, RC=0x%08X", 
         -:  502:                          (unsigned int)Status);    
         2:  503:        return(Status);
@@ -518,7 +518,7 @@
         -:  516:
        12:  517:    if (Status != CFE_SUCCESS)
         -:  518:    {
-        1:  519:        CFE_EVS_SendEvent(SCH_MDT_REG_ERR_EID, CFE_EVS_ERROR,
+        1:  519:        CFE_EVS_SendEvent(SCH_MDT_REG_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  520:                          "Error Registering MDT, RC=0x%08X", 
         -:  521:                          (unsigned int)Status);    
         1:  522:        return(Status);
@@ -533,7 +533,7 @@
         -:  531:
        11:  532:    if (Status != CFE_SUCCESS)
         -:  533:    {
-        1:  534:        CFE_EVS_SendEvent(SCH_SDT_LOAD_ERR_EID, CFE_EVS_ERROR,
+        1:  534:        CFE_EVS_SendEvent(SCH_SDT_LOAD_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  535:                          "Error (RC=0x%08X) Loading SDT with %s", 
         -:  536:                          (unsigned int)Status, SCH_SCHEDULE_FILENAME);    
         1:  537:        return(Status);
@@ -548,7 +548,7 @@
         -:  546:
        10:  547:    if (Status != CFE_SUCCESS)
         -:  548:    {
-        1:  549:        CFE_EVS_SendEvent(SCH_MDT_LOAD_ERR_EID, CFE_EVS_ERROR,
+        1:  549:        CFE_EVS_SendEvent(SCH_MDT_LOAD_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  550:                          "Error (RC=0x%08X) Loading MDT with %s", 
         -:  551:                          (unsigned int)Status, SCH_MESSAGE_FILENAME);    
         1:  552:        return(Status);
@@ -562,7 +562,7 @@
         -:  560:
         9:  561:    if (Status != CFE_SUCCESS)
         -:  562:    {
-        1:  563:        CFE_EVS_SendEvent(SCH_ACQ_PTR_ERR_EID, CFE_EVS_ERROR,
+        1:  563:        CFE_EVS_SendEvent(SCH_ACQ_PTR_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  564:                          "Error Acquiring Tbl Ptrs (RC=0x%08X)", 
         -:  565:                          (unsigned int)Status);    
         1:  566:        return(Status);
@@ -588,9 +588,9 @@
         -:  586:    ** Start off assuming Major Frame synch is normal
         -:  587:    ** and should be coming at any moment
         -:  588:    */
-       11:  589:    SCH_AppData.IgnoreMajorFrame     = FALSE;
-       11:  590:    SCH_AppData.IgnoreMajorFrameMsgSent = FALSE;
-       11:  591:    SCH_AppData.UnexpectedMajorFrame = FALSE;
+       11:  589:    SCH_AppData.IgnoreMajorFrame     = false;
+       11:  590:    SCH_AppData.IgnoreMajorFrameMsgSent = false;
+       11:  591:    SCH_AppData.UnexpectedMajorFrame = false;
        11:  592:    SCH_AppData.SyncToMET            = SCH_NOT_SYNCHRONIZED;
        11:  593:    SCH_AppData.MajorFrameSource     = SCH_MAJOR_FS_NONE;
        11:  594:    SCH_AppData.NextSlotNumber       = 0;
@@ -614,7 +614,7 @@
         -:  612:    
        11:  613:    if (Status != CFE_SUCCESS)
         -:  614:    {
-        1:  615:        CFE_EVS_SendEvent(SCH_MINOR_FRAME_TIMER_CREATE_ERR_EID, CFE_EVS_ERROR,
+        1:  615:        CFE_EVS_SendEvent(SCH_MINOR_FRAME_TIMER_CREATE_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  616:                          "Error creating Timer (RC=0x%08X)", 
         -:  617:                          (unsigned int)Status);    
         1:  618:        return(Status);
@@ -625,7 +625,7 @@
         -:  623:    */
        10:  624:    if (SCH_AppData.ClockAccuracy > SCH_WORST_CLOCK_ACCURACY)
         -:  625:    {
-        1:  626:        CFE_EVS_SendEvent(SCH_MINOR_FRAME_TIMER_ACC_WARN_EID, CFE_EVS_INFORMATION,
+        1:  626:        CFE_EVS_SendEvent(SCH_MINOR_FRAME_TIMER_ACC_WARN_EID, CFE_EVS_INFORMATION_BIT,
         -:  627:                          "OS Timer Accuracy (%d > reqd %d usec) requires Minor Frame MET sync",
         -:  628:                          (int)SCH_AppData.ClockAccuracy, SCH_WORST_CLOCK_ACCURACY);
         -:  629:        
@@ -642,7 +642,7 @@
        10:  640:    Status = OS_BinSemCreate(&SCH_AppData.TimeSemaphore, SCH_SEM_NAME, SCH_SEM_VALUE, SCH_SEM_OPTIONS);
        10:  641:    if (Status != CFE_SUCCESS)
         -:  642:    {
-        2:  643:        CFE_EVS_SendEvent(SCH_SEM_CREATE_ERR_EID, CFE_EVS_ERROR,
+        2:  643:        CFE_EVS_SendEvent(SCH_SEM_CREATE_ERR_EID, CFE_EVS_ERROR_BIT,
         -:  644:                          "Error creating Main Loop Timing Semaphore (RC=0x%08X)", 
         -:  645:                          (unsigned int)Status);    
         2:  646:        return(Status);
@@ -733,7 +733,7 @@
         -:  731:    {
         1:  732:        SCH_AppData.SameSlotCount++;
         -:  733:
-        1:  734:        CFE_EVS_SendEvent(SCH_SAME_SLOT_EID, CFE_EVS_DEBUG,
+        1:  734:        CFE_EVS_SendEvent(SCH_SAME_SLOT_EID, CFE_EVS_DEBUG_BIT,
         -:  735:                          "Slot did not increment: slot = %d",
         -:  736:                          (int)CurrentSlot);
         1:  737:        ProcessCount = 0;
@@ -746,7 +746,7 @@
         -:  744:    {
         2:  745:        SCH_AppData.SkippedSlotsCount++;
         -:  746:
-        4:  747:        CFE_EVS_SendEvent(SCH_SKIPPED_SLOTS_EID, CFE_EVS_ERROR,
+        4:  747:        CFE_EVS_SendEvent(SCH_SKIPPED_SLOTS_EID, CFE_EVS_ERROR_BIT,
         -:  748:                          "Slots skipped: slot = %d, count = %d",
         4:  749:                          SCH_AppData.NextSlotNumber, (int)(ProcessCount - 1));
         -:  750:
@@ -793,7 +793,7 @@
         -:  791:        /* Generate an event message if not syncing to MET or when there is more than two being processed */
         2:  792:        if ((ProcessCount > SCH_AppData.WorstCaseSlotsPerMinorFrame) || (SCH_AppData.SyncToMET == SCH_NOT_SYNCHRONIZED))
         -:  793:        {
-        4:  794:            CFE_EVS_SendEvent(SCH_MULTI_SLOTS_EID, CFE_EVS_INFORMATION,
+        4:  794:            CFE_EVS_SendEvent(SCH_MULTI_SLOTS_EID, CFE_EVS_INFORMATION_BIT,
         -:  795:                              "Multiple slots processed: slot = %d, count = %d",
         2:  796:                              SCH_AppData.NextSlotNumber, (int)ProcessCount);
         -:  797:        }
@@ -904,11 +904,11 @@
         -:  902:        /*
         -:  903:        ** Too much data for just one event
         -:  904:        */
-        6:  905:        CFE_EVS_SendEvent(SCH_CORRUPTION_EID, CFE_EVS_ERROR,
+        6:  905:        CFE_EVS_SendEvent(SCH_CORRUPTION_EID, CFE_EVS_ERROR_BIT,
         -:  906:                          "Corrupt data error (1): slot = %d, entry = %d",
         6:  907:                          SCH_AppData.NextSlotNumber, (int)EntryNumber);
         -:  908:
-       24:  909:        CFE_EVS_SendEvent(SCH_CORRUPTION_EID, CFE_EVS_ERROR,
+       24:  909:        CFE_EVS_SendEvent(SCH_CORRUPTION_EID, CFE_EVS_ERROR_BIT,
         -:  910:                          "Corrupt data error (2): msg = %d, freq = %d, type = %d, rem = %d",
         6:  911:                          NextEntry->MessageIndex,
         6:  912:                          NextEntry->Frequency,
@@ -931,7 +931,7 @@
         2:  929:        if (Remainder == NextEntry->Remainder)
         -:  930:        {
         2:  931:            Message = SCH_AppData.MessageTable[NextEntry->MessageIndex].MessageBuffer;
-        2:  932:            Status = CFE_SB_SendMsg((CFE_SB_Msg_t *) Message);
+        2:  932:            Status = CFE_SB_SendMsg((CFE_MSG_Message_t *) Message);
         -:  933:            
         -:  934:            /* If additional activity types are added in the future, a switch statement */
         -:  935:            /* would be useful, as shown below:                                         */
@@ -942,7 +942,7 @@
         -:  940:        *   {
         -:  941:        *       case SCH_ACTIVITY_SEND_MSG:
         -:  942:        *           Message = SCH_AppData.MessageTable[NextEntry->MessageIndex].MessageBuffer;
-        -:  943:        *           Status = CFE_SB_SendMsg((CFE_SB_Msg_t *) Message);
+        -:  943:        *           Status = CFE_SB_SendMsg((CFE_MSG_Message_t *) Message);
         -:  944:        *           break;
         -:  945:        *            
         -:  946:        *       default:
@@ -958,7 +958,7 @@
         -:  956:            {
         1:  957:                SCH_AppData.ScheduleActivityFailureCount++;
         -:  958:
-        2:  959:                CFE_EVS_SendEvent(SCH_PACKET_SEND_EID, CFE_EVS_ERROR,
+        2:  959:                CFE_EVS_SendEvent(SCH_PACKET_SEND_EID, CFE_EVS_ERROR_BIT,
         -:  960:                                  "Activity error: slot = %d, entry = %d, err = 0x%08X",
         1:  961:                                  SCH_AppData.NextSlotNumber, (int)EntryNumber, (unsigned int)Status);
         -:  962:            }
@@ -1119,7 +1119,7 @@
         -: 1117:        {
        12: 1118:            TableResult = EntryResult;
         -: 1119:
-       12: 1120:            CFE_EVS_SendEvent(SCH_SCHEDULE_TBL_ERR_EID, CFE_EVS_ERROR,
+       12: 1120:            CFE_EVS_SendEvent(SCH_SCHEDULE_TBL_ERR_EID, CFE_EVS_ERROR_BIT,
         -: 1121:                              "Schedule tbl verify error - idx[%d] ena[%d] typ[%d] fre[%d] rem[%d] msg[%d] grp[0x%08X]",
         -: 1122:                              (int)TableIndex, EnableState, Type, Frequency, Remainder, MessageIndex, (unsigned int)GroupData);
         -: 1123:        }
@@ -1128,7 +1128,7 @@
         -: 1126:    /*
         -: 1127:    ** Send event describing results
         -: 1128:    */
-       14: 1129:    CFE_EVS_SendEvent(SCH_SCHEDULE_TABLE_EID, CFE_EVS_DEBUG,
+       14: 1129:    CFE_EVS_SendEvent(SCH_SCHEDULE_TABLE_EID, CFE_EVS_DEBUG_BIT,
         -: 1130:                      "Schedule table verify results -- good[%d] bad[%d] unused[%d]",
         -: 1131:                      (int)GoodCount, (int)BadCount, (int)UnusedCount);
         -: 1132:    /*
@@ -1238,7 +1238,7 @@
         -: 1236:        {
         5: 1237:            TableResult = EntryResult;
         -: 1238:
-        5: 1239:            CFE_EVS_SendEvent(SCH_MESSAGE_TBL_ERR_EID, CFE_EVS_ERROR,
+        5: 1239:            CFE_EVS_SendEvent(SCH_MESSAGE_TBL_ERR_EID, CFE_EVS_ERROR_BIT,
         -: 1240:                              "Message tbl verify err - idx[%d] mid[0x%X] len[%d] buf[%d]",
         -: 1241:                              (int)TableIndex, MessageID, MessageLength, (int)BufferIndex);
         -: 1242:        }
@@ -1247,7 +1247,7 @@
         -: 1245:    /*
         -: 1246:    ** Send event describing results
         -: 1247:    */
-        7: 1248:    CFE_EVS_SendEvent(SCH_MESSAGE_TABLE_EID, CFE_EVS_DEBUG,
+        7: 1248:    CFE_EVS_SendEvent(SCH_MESSAGE_TABLE_EID, CFE_EVS_DEBUG_BIT,
         -: 1249:                      "Message tbl verify results - good[%d] bad[%d] unused[%d]",
         -: 1250:                      (int)GoodCount, (int)BadCount, (int)UnusedCount);
         -: 1251:    /*

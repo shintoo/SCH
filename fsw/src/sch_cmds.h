@@ -76,7 +76,7 @@
 **  \sa #CFE_SB_RcvMsg
 **
 *************************************************************************/
-int32 SCH_AppPipe(CFE_SB_MsgPtr_t MessagePtr);
+int32 SCH_AppPipe(CFE_MSG_Message_t *MessagePtr);
 
 /************************************************************************/
 /** \brief Manages Scheduler's Schedule and Message Definition Tables
@@ -277,11 +277,11 @@ void SCH_SendDiagTlmCmd(CFE_SB_MsgPtr_t MessagePtr);
 **       None
 **       
 **  \param [in]   GoodCommand    Indicates the command was successfully
-**                               performed (=TRUE) or contained an error
-**                               (=FALSE). 
+**                               performed (=true) or contained an error
+**                               (=false). 
 **       
 *************************************************************************/
-void SCH_PostCommandResult(boolean GoodCommand);
+void SCH_PostCommandResult(bool GoodCommand);
 
 /************************************************************************/
 /** \brief Verifies the length of the specified message

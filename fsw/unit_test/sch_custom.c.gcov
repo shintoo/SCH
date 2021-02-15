@@ -267,7 +267,7 @@
         -:  265:            ** of noisy major frames.  Also, indicate in telemetry that this particular
         -:  266:            ** Major Frame signal is considered noisy.
         -:  267:            */
-        3:  268:            SCH_AppData.UnexpectedMajorFrame = TRUE;
+        3:  268:            SCH_AppData.UnexpectedMajorFrame = true;
         3:  269:            SCH_AppData.UnexpectedMajorFrameCount++;
         -:  270:
         -:  271:            /*
@@ -283,20 +283,20 @@
         -:  281:                */
         3:  282:                if (SCH_AppData.ConsecutiveNoisyFrameCounter >= SCH_MAX_NOISY_MAJORF)
         -:  283:                {
-        2:  284:                    SCH_AppData.IgnoreMajorFrame = TRUE;
+        2:  284:                    SCH_AppData.IgnoreMajorFrame = true;
         -:  285:                }
         -:  286:            }
         -:  287:        }
         -:  288:        else /* Major Frame occurred when expected */
         -:  289:        {
-        1:  290:            SCH_AppData.UnexpectedMajorFrame = FALSE;
+        1:  290:            SCH_AppData.UnexpectedMajorFrame = false;
         1:  291:            SCH_AppData.ConsecutiveNoisyFrameCounter = 0;
         -:  292:        }
         -:  293:        
         -:  294:        /*
         -:  295:        ** Ignore this callback if SCH has detected a noisy Major Frame Synch signal
         -:  296:        */
-        4:  297:        if (SCH_AppData.IgnoreMajorFrame == FALSE)
+        4:  297:        if (SCH_AppData.IgnoreMajorFrame == false)
         -:  298:        {
         -:  299:            /*
         -:  300:            ** Stop Minor Frame Timer (which should be waiting for an unusually long

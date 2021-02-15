@@ -79,7 +79,7 @@ void Ut_CFE_EVS_SetFunctionHook(uint32 Index, void *FunPtr)
     else
     {
         printf("Unsupported EVS Index In SetFunctionHook Call %lu", Index);
-        UtAssert_True(FALSE, "Unsupported EVS Index In SetFunctionHook Call");
+        UtAssert_True(false, "Unsupported EVS Index In SetFunctionHook Call");
     }
 }
 
@@ -93,29 +93,29 @@ void Ut_CFE_EVS_SetReturnCode(uint32 Index, int32 RtnVal, uint32 CallCnt)
     else
     {
         printf("Unsupported EVS Index In SetReturnCode Call %lu\n", Index);
-        UtAssert_True(FALSE, "Unsupported EVS Index In SetReturnCode Call");
+        UtAssert_True(false, "Unsupported EVS Index In SetReturnCode Call");
     }
 }
 
-boolean Ut_CFE_EVS_UseReturnCode(uint32 Index)
+bool Ut_CFE_EVS_UseReturnCode(uint32 Index)
 {
     if (Ut_CFE_EVS_ReturnCodeTable[Index].Count > 0)
     {
         Ut_CFE_EVS_ReturnCodeTable[Index].Count--;
         if (Ut_CFE_EVS_ReturnCodeTable[Index].Count == 0)
-            return(TRUE);
+            return(true);
     }
-    else if (Ut_CFE_EVS_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero == TRUE)
+    else if (Ut_CFE_EVS_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero == true)
     {
-        return(TRUE);
+        return(true);
     }
     
-    return(FALSE);
+    return(false);
 }
 
 void Ut_CFE_EVS_ContinueReturnCodeAfterCountZero(uint32 Index)
 {
-    Ut_CFE_EVS_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero = TRUE;
+    Ut_CFE_EVS_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero = true;
 }
 
 int32 CFE_EVS_Register (void *Filters, uint16 NumEventFilters, uint16 FilterScheme)
@@ -223,7 +223,7 @@ void Ut_OSTIMER_SetFunctionHook(uint32 Index, void *FunPtr)
     else
     {
         printf("Unsupported OSTIMER Index In SetFunctionHook Call %lu", Index);
-        UtAssert_True(FALSE, "Unsupported OSTIMER Index In SetFunctionHook Call");
+        UtAssert_True(false, "Unsupported OSTIMER Index In SetFunctionHook Call");
     }
 }
 
@@ -237,29 +237,29 @@ void Ut_OSTIMER_SetReturnCode(uint32 Index, int32 RtnVal, uint32 CallCnt)
     else
     {
         printf("Unsupported OSTIMER Index In SetReturnCode Call %lu\n", Index);
-        UtAssert_True(FALSE, "Unsupported OSTIMER Index In SetReturnCode Call");
+        UtAssert_True(false, "Unsupported OSTIMER Index In SetReturnCode Call");
     }
 }
 
-boolean Ut_OSTIMER_UseReturnCode(uint32 Index)
+bool Ut_OSTIMER_UseReturnCode(uint32 Index)
 {
     if (Ut_OSTIMER_ReturnCodeTable[Index].Count > 0)
     {
         Ut_OSTIMER_ReturnCodeTable[Index].Count--;
         if (Ut_OSTIMER_ReturnCodeTable[Index].Count == 0)
-            return(TRUE);
+            return(true);
     }
-    else if (Ut_OSTIMER_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero == TRUE)
+    else if (Ut_OSTIMER_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero == true)
     {
-        return(TRUE);
+        return(true);
     }
     
-    return(FALSE);
+    return(false);
 }
 
 void Ut_OSTIMER_ContinueReturnCodeAfterCountZero(uint32 Index)
 {
-    Ut_OSTIMER_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero = TRUE;
+    Ut_OSTIMER_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero = true;
 }
 
 int32 OS_TimerCreate(uint32 *timer_id, const char *timer_name, uint32 *clock_accuracy, OS_TimerCallback_t  callback_ptr)
@@ -325,7 +325,7 @@ void Ut_CFE_TIME_SetFunctionHook(uint32 Index, void *FunPtr)
     else
     {
         printf("Unsupported TIME Index In SetFunctionHook Call %lu\n", Index);
-        UtAssert_True(FALSE, "Unsupported TIME Index In SetFunctionHook Call");
+        UtAssert_True(false, "Unsupported TIME Index In SetFunctionHook Call");
     }
 }
 
@@ -339,29 +339,29 @@ void Ut_CFE_TIME_SetReturnCode(uint32 Index, int32 RtnVal, uint32 CallCnt)
     else
     {
         printf("Unsupported TIME Index In SetReturnCode Call %lu\n", Index);
-        UtAssert_True(FALSE, "Unsupported TIME Index In SetReturnCode Call");
+        UtAssert_True(false, "Unsupported TIME Index In SetReturnCode Call");
     }
 }
 
-boolean Ut_CFE_TIME_UseReturnCode(uint32 Index)
+bool Ut_CFE_TIME_UseReturnCode(uint32 Index)
 {
     if (Ut_CFE_TIME_ReturnCodeTable[Index].Count > 0)
     {
         Ut_CFE_TIME_ReturnCodeTable[Index].Count--;
         if (Ut_CFE_TIME_ReturnCodeTable[Index].Count == 0)
-            return(TRUE);
+            return(true);
     }
-    else if (Ut_CFE_TIME_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero == TRUE)
+    else if (Ut_CFE_TIME_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero == true)
     {
-        return(TRUE);
+        return(true);
     }
     
-    return(FALSE);
+    return(false);
 }
 
 void Ut_CFE_TIME_ContinueReturnCodeAfterCountZero(uint32 Index)
 {
-    Ut_CFE_TIME_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero = TRUE;
+    Ut_CFE_TIME_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero = true;
 }
 
 CFE_TIME_SysTime_t  CFE_TIME_GetUTC(void)
@@ -475,7 +475,7 @@ CFE_TIME_Compare_t  CFE_TIME_Compare(CFE_TIME_SysTime_t TimeA, CFE_TIME_SysTime_
     if (Ut_CFE_TIME_HookTable.CFE_TIME_Compare)
         return Ut_CFE_TIME_HookTable.CFE_TIME_Compare(TimeA, TimeB);
 
-    return TRUE;
+    return true;
 }
 
 uint32  CFE_TIME_FS2CFESeconds(uint32 SecondsFS)
@@ -621,7 +621,7 @@ void Ut_CFE_SB_SetFunctionHook(uint32 Index, void *FunPtr)
     else
     {
         printf("Unsupported SB Index In SetFunctionHook Call %lu\n", Index);
-        UtAssert_True(FALSE, "Unsupported SB Index In SetFunctionHook Call");
+        UtAssert_True(false, "Unsupported SB Index In SetFunctionHook Call");
     }
 }
 
@@ -634,29 +634,29 @@ void Ut_CFE_SB_SetReturnCode(uint32 Index, int32 RtnVal, uint32 CallCnt)
     else
     {
         printf("Unsupported SB Index In SetReturnCode Call %lu\n", Index);
-        UtAssert_True(FALSE, "Unsupported SB Index In SetReturnCode Call");
+        UtAssert_True(false, "Unsupported SB Index In SetReturnCode Call");
     }
 }
 
-boolean Ut_CFE_SB_UseReturnCode(uint32 Index)
+bool Ut_CFE_SB_UseReturnCode(uint32 Index)
 {
     if (Ut_CFE_SB_ReturnCodeTable[Index].Count > 0)
     {
         Ut_CFE_SB_ReturnCodeTable[Index].Count--;
         if (Ut_CFE_SB_ReturnCodeTable[Index].Count == 0)
-            return(TRUE);
+            return(true);
     }
-    else if (Ut_CFE_SB_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero == TRUE)
+    else if (Ut_CFE_SB_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero == true)
     {
-        return(TRUE);
+        return(true);
     }
     
-    return(FALSE);
+    return(false);
 }
 
 void Ut_CFE_SB_ContinueReturnCodeAfterCountZero(uint32 Index)
 {
-    Ut_CFE_SB_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero = TRUE;
+    Ut_CFE_SB_ReturnCodeTable[Index].ContinueReturnCodeAfterCountZero = true;
 }
 
 int32 CFE_SB_CreatePipe (CFE_SB_PipeId_t *PipeIdPtr, uint16 Depth, const char *PipeName)
@@ -751,7 +751,7 @@ int32 CFE_SB_UnsubscribeLocal(CFE_SB_MsgId_t MsgId, CFE_SB_PipeId_t PipeId)
     return CFE_SUCCESS;
 }
 
-int32 CFE_SB_SendMsg (CFE_SB_Msg_t *MsgPtr)
+int32 CFE_SB_SendMsg (CFE_MSG_Message_t *MsgPtr)
 {
     /* Check for specified return */
     if (Ut_CFE_SB_UseReturnCode(UT_CFE_SB_SENDMSG_INDEX))
@@ -764,7 +764,7 @@ int32 CFE_SB_SendMsg (CFE_SB_Msg_t *MsgPtr)
     return CFE_SUCCESS;
 }
 
-int32 CFE_SB_PassMsg (CFE_SB_Msg_t *MsgPtr)
+int32 CFE_SB_PassMsg (CFE_MSG_Message_t *MsgPtr)
 {
     /* Check for specified return */
     if (Ut_CFE_SB_UseReturnCode(UT_CFE_SB_PASSMSG_INDEX))
@@ -804,7 +804,7 @@ uint32  CFE_SB_GetLastSenderId(CFE_SB_SenderId_t **Ptr,CFE_SB_PipeId_t  PipeId)
     return CFE_SUCCESS;
 }
 
-CFE_SB_Msg_t  *CFE_SB_ZeroCopyGetPtr(uint16  MsgSize,CFE_SB_ZeroCopyHandle_t *BufferHandle)
+CFE_MSG_Message_t  *CFE_SB_ZeroCopyGetPtr(uint16  MsgSize,CFE_SB_ZeroCopyHandle_t *BufferHandle)
 {
     /* Can't specify return value - Ut_CFE_SB_SetReturnCode can only return integers */
 
@@ -815,7 +815,7 @@ CFE_SB_Msg_t  *CFE_SB_ZeroCopyGetPtr(uint16  MsgSize,CFE_SB_ZeroCopyHandle_t *Bu
     return NULL;
 }
 
-int32 CFE_SB_ZeroCopyReleasePtr(CFE_SB_Msg_t  *Ptr2Release,CFE_SB_ZeroCopyHandle_t BufferHandle)
+int32 CFE_SB_ZeroCopyReleasePtr(CFE_MSG_Message_t  *Ptr2Release,CFE_SB_ZeroCopyHandle_t BufferHandle)
 {
     /* Check for specified return */
     if (Ut_CFE_SB_UseReturnCode(UT_CFE_SB_ZEROCOPYRELEASEPTR_INDEX))
@@ -828,7 +828,7 @@ int32 CFE_SB_ZeroCopyReleasePtr(CFE_SB_Msg_t  *Ptr2Release,CFE_SB_ZeroCopyHandle
     return CFE_SUCCESS;
 }
 
-int32 CFE_SB_ZeroCopySend(CFE_SB_Msg_t   *MsgPtr, CFE_SB_ZeroCopyHandle_t BufferHandle)
+int32 CFE_SB_ZeroCopySend(CFE_MSG_Message_t   *MsgPtr, CFE_SB_ZeroCopyHandle_t BufferHandle)
 {
     /* Check for specified return */
     if (Ut_CFE_SB_UseReturnCode(UT_CFE_SB_ZEROCOPYSEND_INDEX))
@@ -841,7 +841,7 @@ int32 CFE_SB_ZeroCopySend(CFE_SB_Msg_t   *MsgPtr, CFE_SB_ZeroCopyHandle_t Buffer
     return CFE_SUCCESS;
 }
 
-int32 CFE_SB_ZeroCopyPass(CFE_SB_Msg_t   *MsgPtr, CFE_SB_ZeroCopyHandle_t BufferHandle)
+int32 CFE_SB_ZeroCopyPass(CFE_MSG_Message_t   *MsgPtr, CFE_SB_ZeroCopyHandle_t BufferHandle)
 {
     /* Check for specified return */
     if (Ut_CFE_SB_UseReturnCode(UT_CFE_SB_ZEROCOPYPASS_INDEX))
@@ -854,7 +854,7 @@ int32 CFE_SB_ZeroCopyPass(CFE_SB_Msg_t   *MsgPtr, CFE_SB_ZeroCopyHandle_t Buffer
     return CFE_SUCCESS;
 }
 
-void CFE_SB_InitMsg (void *MsgPtr, CFE_SB_MsgId_t MsgId, uint16 Length, boolean Clear)
+void CFE_SB_InitMsg (void *MsgPtr, CFE_SB_MsgId_t MsgId, uint16 Length, bool Clear)
 {
     /* Can't specify return value - this is a void function */
 
@@ -1053,7 +1053,7 @@ void CFE_SB_GenerateChecksum(CFE_SB_MsgPtr_t MsgPtr)
     return;
 }
 
-boolean CFE_SB_ValidateChecksum(CFE_SB_MsgPtr_t MsgPtr)
+bool CFE_SB_ValidateChecksum(CFE_SB_MsgPtr_t MsgPtr)
 {
     /* Check for specified return */
     if (Ut_CFE_SB_UseReturnCode(UT_CFE_SB_VALIDATECHECKSUM_INDEX))
@@ -1063,7 +1063,7 @@ boolean CFE_SB_ValidateChecksum(CFE_SB_MsgPtr_t MsgPtr)
     if (Ut_CFE_SB_HookTable.CFE_SB_ValidateChecksum)
         return Ut_CFE_SB_HookTable.CFE_SB_ValidateChecksum(MsgPtr);
 
-    return(TRUE);
+    return(true);
 }
 
 int32 CFE_SB_CleanUpApp (uint32 AppId)

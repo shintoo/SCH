@@ -17,7 +17,7 @@
 #
 # GCOV is disabled by default.  If you are using the source level debugger you will want to 
 # disable GCOV.  To enable GCOV you can override the ENABLE_GCOV variable on the command line 
-# by setting it to TRUE.  For example "make ENABLE_GCOV=TRUE".
+# by setting it to true.  For example "make ENABLE_GCOV=true".
 #
 
 #

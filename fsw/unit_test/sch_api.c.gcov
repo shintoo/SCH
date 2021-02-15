@@ -81,7 +81,7 @@
         -:   79:**
         -:   80:** NOTE: For complete prolog information, see 'sch_api.h'.
         -:   81:********************************************************************/
-        6:   82:boolean SCH_GetProcessingState(void)
+        6:   82:bool SCH_GetProcessingState(void)
         -:   83:{
         6:   84:    return (SCH_LibData.ProcessingDisabledCtr == 0);
         -:   85:}
