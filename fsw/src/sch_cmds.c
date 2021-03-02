@@ -316,7 +316,7 @@ void SCH_EnableCmd(CFE_SB_MsgPtr_t MessagePtr)
     /*
     ** Extract contents of command
     */
-    EnableCmd   = (SCH_EntryCmd_t *) MessagePtr;
+    EnableCmd   = (void *) MessagePtr;
 
     if(SCH_VerifyCmdLength(MessagePtr, sizeof(SCH_EntryCmd_t)) == SCH_SUCCESS)
     {
@@ -386,7 +386,7 @@ void SCH_DisableCmd(CFE_SB_MsgPtr_t MessagePtr)
     /*
     ** Extract contents of command
     */
-    DisableCmd  = (SCH_EntryCmd_t *) MessagePtr;
+    DisableCmd  = (void *) MessagePtr;
 
     if(SCH_VerifyCmdLength(MessagePtr, sizeof(SCH_EntryCmd_t)) == SCH_SUCCESS)
     {
@@ -460,7 +460,7 @@ void SCH_EnableGroupCmd(CFE_SB_MsgPtr_t MessagePtr)
     /*
     ** Extract command parameters
     */
-    EnableCmd = (SCH_GroupCmd_t *) MessagePtr;
+    EnableCmd = (void *) MessagePtr;
 
     if(SCH_VerifyCmdLength(MessagePtr, sizeof(SCH_GroupCmd_t)) == SCH_SUCCESS)
     {
@@ -551,7 +551,7 @@ void SCH_DisableGroupCmd(CFE_SB_MsgPtr_t MessagePtr)
     /*
     ** Extract command parameters
     */
-    DisableCmd = (SCH_GroupCmd_t *) MessagePtr;
+    DisableCmd = (void *) MessagePtr;
 
     if(SCH_VerifyCmdLength(MessagePtr, sizeof(SCH_GroupCmd_t)) == SCH_SUCCESS)
     {
