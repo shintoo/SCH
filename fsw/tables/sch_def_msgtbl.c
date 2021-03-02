@@ -28,7 +28,6 @@
 #include "cfe_tbl_filedef.h"
 #include "sch_platform_cfg.h"
 #include "sch_tbldefs.h"
-
 #include "cfe_msgids.h"
 /* #include "ci_lab_msgids.h" */
 /* #include "to_lab_msgids.h" */
@@ -41,6 +40,7 @@
 /* #include "md_msgids.h"  */
 /* #include "mm_msgids.h"  */
 /* #include "sc_msgids.h"  */
+#include "sample_app_msgids.h"
 #include "sch_msgids.h"
 
 
@@ -108,12 +108,12 @@ SCH_MessageEntry_t SCH_DefaultMessageTable[SCH_MAX_MESSAGES] =
   /*
   **  CFS housekeeping request messages
   */
-    /* command ID #6 - Checksum HK Request           */
-/*{ { CFE_MAKE_BIG16(CS_SEND_HK_MID),  CFE_MAKE_BIG16(0xC000), CFE_MAKE_BIG16(0x0001), 0x0000 } }, */
-  { { CFE_MAKE_BIG16(SCH_UNUSED_MID) } },
-    /* command ID #7 - Data Store HK Request         */
-/*{ { CFE_MAKE_BIG16(DS_SEND_HK_MID),  CFE_MAKE_BIG16(0xC000), CFE_MAKE_BIG16(0x0001), 0x0000 } }, */
-  { { CFE_MAKE_BIG16(SCH_UNUSED_MID) } },
+    /* command ID #6 - Noop Request                  */
+  { { CFE_MAKE_BIG16(SAMPLE_APP_CMD_MID),  CFE_MAKE_BIG16(0xC000), CFE_MAKE_BIG16(0x0001), 0x0000 } },
+/*  { { CFE_MAKE_BIG16(SCH_UNUSED_MID) } }, */ 
+    /* command ID #7 - Wesmellows command            */
+  { { CFE_MAKE_BIG16(SAMPLE_APP_CMD_MID),  CFE_MAKE_BIG16(0xC000), CFE_MAKE_BIG16(0x0001), 0x0003 } },
+/*   { { CFE_MAKE_BIG16(SCH_UNUSED_MID) } },
     /* command ID #8 - File Manager HK Request       */
 /*{ { CFE_MAKE_BIG16(FM_SEND_HK_MID),  CFE_MAKE_BIG16(0xC000), CFE_MAKE_BIG16(0x0001), 0x0000 } }, */
   { { CFE_MAKE_BIG16(SCH_UNUSED_MID) } },

@@ -6,6 +6,10 @@ include_directories(fsw/mission_inc)
 include_directories(fsw/platform_inc)
 
 aux_source_directory(fsw/src APP_SRC_FILES)
-
+include_directories(${sample_app_MISSION_DIR}/fsw/platform_inc)
 # Create the app module
 add_cfe_app(sch ${APP_SRC_FILES})
+
+include_directories(fsw/src)
+aux_source_directory(fsw/tables APP_TABLE_FILES)
+add_cfe_tables(sch ${APP_TABLE_FILES})
